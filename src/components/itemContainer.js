@@ -32,4 +32,4 @@ const mapDispatchtoprops = (dispatch, ownProps) => {
     }
 }
 
-export default connect(null, mapDispatchtoprops)(ItemContainer)
+export default connect(mapStateToProps, mapDispatchtoprops)(ItemContainer)

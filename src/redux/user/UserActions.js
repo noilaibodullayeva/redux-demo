@@ -1,4 +1,5 @@
 import { FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS } from "./Usertypes"
+import axios from "axios"
 
 export const fetchUsersRequest = () => {
     return {
@@ -13,9 +14,26 @@ export const fetchUsersSuccess = () => {
     }
 }
 
-export const fetchUsersFailure= () => {
+export const fetchUsersFailure = () => {
     return {
-       type: FETCH_USERS_FAILURE,
-       payload: error
+        type: FETCH_USERS_FAILURE,
+        payload: error
     }
-   }
+}
+
+export const fetchUsers = () => {
+    return (dispatch) => {
+        dispatch(fetchUsersRequest)
+        axios.get(
+            'https://jsonplaceholder.typicode.com/users'
+        )
+        .then(response => {
+            const users = response.data
+            dispatch(fetchUsersSuccess(users))
+        })
+        .catch(error => {
+            const errorMg = error.message
+            dispatch(fetchUsersFailure(errorMg))
+        })
+    }
+}
